@@ -12,7 +12,6 @@ var initialCities = [
   "Atlanta",
 ];
 
-
 // Fetch request
 
 const fetchRequestObject = {
@@ -83,44 +82,61 @@ function getCityData(cityName) {
     });
 }
 
-// Function to get 5 days forecast 
+// Function to get 5 days forecast
 function getFiveDaysInfo(response) {
-    fetch(
-        `https://api.openweathermap.org/data/2.5/onecall?lat=${response.coord.lat}&lon=${response.coord.lon}&exclude=minutely,hourly,alerts&units=metric&appid=${apiKey}`
-    )
-    .then(function(response) {
-        if (response.status === 200) {
-            return response.json();
-        }
+  fetch(
+    `https://api.openweathermap.org/data/2.5/onecall?lat=${response.coord.lat}&lon=${response.coord.lon}&exclude=minutely,hourly,alerts&units=metric&appid=${apiKey}`
+  )
+    .then(function (response) {
+      if (response.status === 200) {
+        return response.json();
+      }
     })
-    .then(function(response) {
-        if(response) {
-            var daily = response.daily.slice(1, 6);
+    .then(function (response) {
+      if (response) {
+        var daily = response.daily.slice(1, 6);
 
-            daily.forEach(({dt, weather, temp, wind_speed, humidity}, index)=> {
-                $(`#${index + 1}cardDate`).text(moment(dt, "X").format("DD/MM/YYYY"));
-                $(`#${index + 1}cardIcon`).attr("src",
-                `https://openweathermap.org/img/wn/${weather[0].icon}@2x.png`);
-                $(`#${index + 1}cardTempValue`).text(temp.day);
-                $(`#${index + 1}cardWindValue`).text(wind_speed);
-                $(`#${index + 1}cardHumidityValue`).text(humidity);
-            });
+        daily.forEach(({ dt, weather, temp, wind_speed, humidity }, index) => {
+          $(`#${index + 1}cardDate`).text(moment(dt, "X").format("DD/MM/YYYY"));
+          $(`#${index + 1}cardIcon`).attr(
+            "src",
+            `https://openweathermap.org/img/wn/${weather[0].icon}@2x.png`
+          );
+          $(`#${index + 1}cardTempValue`).text(temp.day);
+          $(`#${index + 1}cardWindValue`).text(wind_speed);
+          $(`#${index + 1}cardHumidityValue`).text(humidity);
+        });
 
-            var uvIndex = response.current.uvi;
-            $("#viewUVIndexValue").text(uvIndex);
-            $("#viewUVIndexValue").attr("style",
-            `background-color: ${
-              uvIndex <= 2
-                ? "#4fb400"
-                : uvIndex <= 5
-                ? "#f7e401"
-                : uvIndex <= 7
-                ? "#fb8603"
-                : uvIndex <= 10
-                ? "#d9001d"
-                : "#b74cfe"
-                }`
-                )
-        }
-    })
+        var uvIndex = response.current.uvi;
+        $("#viewUVIndexValue").text(uvIndex);
+        $("#viewUVIndexValue").attr(
+          "style",
+          `background-color: ${
+            uvIndex <= 2
+              ? "#4fb400"
+              : uvIndex <= 5
+              ? "#f7e401"
+              : uvIndex <= 7
+              ? "#fb8603"
+              : uvIndex <= 10
+              ? "#d9001d"
+              : "#b74cfe"
+          }`
+        );
+      }
+    });
 }
+
+function onSearch() {
+  var value = $("#SearchInput").val();
+
+  if (value.trim() === "") {
+    $("#errorMessage").text("Please type the city name !");
+  } else {
+    getCityData(value.trim());
+  }
+}
+
+var cuurentCity = localStorage.getItem("currentCity");
+var citiesState = localStorage.getItem("cities");
+citiesState = citiesState ? JSON.parse(citiesState) : null;
