@@ -62,3 +62,109 @@ h1 {
 .line {
     border-bottom: 2px solid #757575;
 }
+
+.city-list {
+    padding: 0;
+    list-style-type: none;
+    height: calc(100% - 180px);
+    overflow: auto;
+  }
+
+  .city-list > li {
+    margin-top: 8px;
+  }
+
+  .city-list > li > button {
+    width: 100%;
+    background-color: #b7b7b7;
+    height: 36px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .city-list > li > button:hover {
+    background-color: #a2a1a1;
+  }
+  
+  .content {
+    width: 80%;
+  }
+  
+  .view-box {
+    padding: 0 12px 12px 12px;
+    border: 1px solid #202020;
+  }
+  
+  .view-title {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .view-title h4 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .view-title img {
+    width: auto;
+    height: 50px;
+  }
+  
+  .content h4 {
+    margin: 12px 0 8px 0;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .view-info > div {
+    margin-bottom: 16px;
+  }
+  
+  .day-info-box {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  
+  .day-info-card {
+    padding: 8px;
+    width: 130px;
+    background-color: #33475a;
+  }
+  .day-info-card img {
+    width: auto;
+    height: 50px;
+  }
+  
+  .day-info-card div {
+    color: #fff;
+  }
+  
+  .day-info-card div span {
+    color: #fff;
+    margin-right: 4px;
+  }
+  
+  #viewUVIndexValue {
+    padding: 2px 12px;
+    border-radius: 5px;
+    color: #fff; 
+  }
+  
+  #errorMessage {
+    color: red;
+    margin: 0;
+  }
+  
+  @media only screen and (max-width: 1042px) {
+    .day-info-box {
+      justify-content: flex-start;
+    }
+  }
+  
