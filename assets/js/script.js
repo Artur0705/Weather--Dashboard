@@ -33,7 +33,7 @@ function getCityData(cityName) {
       if (response.status === 200) {
         return response.json();
       } else {
-        $("#errorMessage").text("no existing city found!");
+        $("#errorMessage").text("No existing city found !");
       }
     })
     .then(function (response) {
@@ -49,15 +49,15 @@ function getCityData(cityName) {
           );
 
           $("#cityList").prepend(`
-                <li>
-                    <button onclick="getCityData('${response.name.toLowerCase()}')">${
+            <li>
+              <button onclick="getCityData('${response.name.toLowerCase()}')">${
             response.name
           }</button>
-                </li>     
-                `);
+            </li>
+          `);
         }
 
-        $("viewCityName").text(response.name);
+        $("#viewCityName").text(response.name);
         const date = moment(new Date().getTime() + response.timezone).format(
           "MM/DD/YYYY"
         );
@@ -127,16 +127,43 @@ function getFiveDaysInfo(response) {
     });
 }
 
+//Function to search cities,displaying initial cities and storing data to local storage, displaying error messages
 function onSearch() {
-  var value = $("#SearchInput").val();
+  var value = $("#searchInput").val();
 
   if (value.trim() === "") {
-    $("#errorMessage").text("Please type the city name !");
+    $("#errorMessage").text("Please type the city name!");
   } else {
     getCityData(value.trim());
   }
 }
 
-var cuurentCity = localStorage.getItem("currentCity");
+var currentCity = localStorage.getItem("currentCity");
 var citiesState = localStorage.getItem("cities");
 citiesState = citiesState ? JSON.parse(citiesState) : null;
+
+if (currentCity) {
+  var value = $("#searchInput").val(currentCity);
+  getCityData(currentCity);
+} else {
+  getCityData("austin");
+}
+
+if (citiesState) {
+  citiesState.forEach((cityName) => {
+    $("#cityList").append(`
+        <li>
+          <button onclick="getCityData('${cityName.toLowerCase()}')">${cityName}</button>
+        </li>
+      `);
+  });
+} else {
+  localStorage.setItem("cities", JSON.stringify(initialCities));
+  initialCities.forEach((cityName) => {
+    $("#cityList").append(`
+        <li>
+          <button onclick="getCityData('${cityName.toLowerCase()}')">${cityName}</button>
+        </li>
+      `);
+  });
+}
