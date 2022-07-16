@@ -26,7 +26,7 @@ const fetchRequestObject = {
 
 function getCityData(cityName) {
   fetch(
-    `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`,
+    `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`,
     fetchRequestObject
   )
     .then(function (response) {
@@ -65,7 +65,7 @@ function getCityData(cityName) {
         $("#viewDate").text("(" + date + ")");
         $("#viewIcon").attr(
           "src",
-          `http://openweathermap.org/img/wn/${response.weather[0].icon}@2x.png`
+          `https://openweathermap.org/img/wn/${response.weather[0].icon}@2x.png`
         );
 
         $("#viewTempValue").text(response.main.temp);
